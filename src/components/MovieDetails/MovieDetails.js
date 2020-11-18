@@ -1,13 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, TouchableOpacity, StyleSheet, Text, Image, ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import * as consts from '../../consts/consts';
 
 export default function MovieDetails(props){
-    let navigation = props.navigation;
     let movieData = props.route.params.data;
     let movieGenres = [];
     let movieOptions = movieData.torrents;
+
+    const headerStyle = {
+        title: '',
+        headerStyle:{
+            backgroundColor:'#000',
+        },
+        headerTintColor:consts.netflixColor,
+        headerTitleStyle:{
+            fontSize:18,
+        },
+    }
+
+    useEffect(()=>{
+        props.navigation.setOptions(headerStyle);
+    },[])
 
     movieData.genres.forEach((g, index) => {
         if(!index == movieData.genres.length){
@@ -16,15 +30,6 @@ export default function MovieDetails(props){
             movieGenres.push(g + ' / ');
         }
     });
-
-    
-    function handleNavigate(){
-        console.log(navigation.goBack())
-    }
-
-    function onValueChange(value) {
-        console.log(value)
-    }
 
 
     return(
