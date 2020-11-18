@@ -6,7 +6,7 @@ export default function GenreButton(props){
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    let name = capitalizeFirstLetter(props.data);
+    let name = capitalizeFirstLetter(props.item);
 
     return(
         <View style={styles.container}>
