@@ -1,16 +1,14 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
-import * as consts from '../../consts/consts';
+import * as utils from '../../utils/utils';
 
 export default function GenreButton(props){
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-    let name = capitalizeFirstLetter(props.item);
+
+    let name = utils.capitalizeFirstLetter(props.item);
 
     return(
         <View style={styles.container}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={()=>props.onPress(props.item)}>
                 <Text style={{textAlign:'center', color:'#fff'}}>{name}</Text>
             </TouchableOpacity>
         </View>
