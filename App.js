@@ -6,6 +6,7 @@ import Home from './src/components/Home/Home';
 import MovieList from './src/components/MovieList/MovieList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MovieDetails from './src/components/MovieDetails/MovieDetails';
+import socket from './src/services/socket/socket';
 
 const Stack = createStackNavigator();
 

@@ -1,9 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, TouchableOpacity, StyleSheet, Text, Image, ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as consts from '../../consts/consts';
+import socket from '../../services/socket/socket';
 
 export default function MovieDetails(props){
+    const [isWatching, setWatching] = useState(null);
+    const [processType, setProcessType] = useState(null);
     let movieData = props.route.params.data;
     let movieGenres = [];
     let movieOptions = movieData.torrents;
@@ -19,10 +22,6 @@ export default function MovieDetails(props){
         },
     }
 
-    useEffect(()=>{
-        props.navigation.setOptions(headerStyle);
-    },[])
-
     movieData.genres.forEach((g, index) => {
         if(!index == movieData.genres.length){
             movieGenres.push(g);
@@ -31,10 +30,45 @@ export default function MovieDetails(props){
         }
     });
 
+    useEffect(()=>{
+        props.navigation.setOptions(headerStyle);
+    },[])
+
+    socket.on('setWatching',(data)=>{
+        if(data){
+            setWatching(true)
+        }else{
+            setProcessType(null);
+            setWatching(false);
+        }
+    })
+
+    socket.on('processType', (data)=>{
+        console.log(data);
+        setProcessType(data);
+    })
+
+    const changeScreen = () =>{
+        socket.emit('app_changeScreen');
+    }
+
+    const closeProcess = () =>{
+        socket.emit('app_closeProcess', processType);
+    }
+
+    const handleOptionClick = (data)=>{
+        let newData = {...data, title:movieData.title};
+        if(newData.type == 'stream'){
+            socket.emit('app_startStream', newData);
+        }else{
+            socket.emit('app_startDownload', newData);
+        }
+    }
+
 
     return(
-        <SafeAreaView style={styles.container}>
-            <ScrollView>
+        <View style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.mainContent}>
                     <Text style={styles.title}>{movieData.title}</Text>
                     <Image source={{uri: movieData.largeImage}} style={styles.image}></Image>
@@ -59,17 +93,17 @@ export default function MovieDetails(props){
                             return (
                             <View style={styles.qualityArea} key={index}>
                                 <View style={styles.qualityText} >
-                                    <Text style={{color:"#fff"}}>Quality: </Text>
-                                    <Text style={{color:"#E50914", marginRight:10}}>{value.quality}</Text>
-                                    <Text style={{color:"#fff"}}>Seeds: </Text>
-                                    <Text style={{color:"#E50914"}}>{value.seeds}</Text>
+                                    <Text style={{color:"#fff", fontSize:10}}>Quality: </Text>
+                                    <Text style={{color:"#E50914", marginRight:10, fontSize:10}}>{value.quality}</Text>
+                                    <Text style={{color:"#fff", fontSize:10}}>Seeds: </Text>
+                                    <Text style={{color:"#E50914", fontSize:10}}>{value.seeds}</Text>
                                 </View>
                                 <View style={styles.qualityButtons}>
-                                    <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:10}}>
-                                        <Text style={{fontSize:12, color:"#fff"}}>Download</Text>
+                                    <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:10}} onPress={()=>handleOptionClick({value: value, type: 'download'})}>
+                                        <Text style={{fontSize:10, color:"#fff"}}>Download</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{backgroundColor:'#E50914', padding:5}}>
-                                        <Text style={{fontSize:12, color:"#fff"}}>Stream</Text>
+                                    <TouchableOpacity style={{backgroundColor:'#E50914', padding:5}} onPress={()=>handleOptionClick({value: value, type: 'stream'})}>
+                                        <Text style={{fontSize:10, color:"#fff"}}>Stream</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -77,10 +111,20 @@ export default function MovieDetails(props){
                             );
                         })}
                     </View>
+                    {isWatching && processType ?
+                    <View style={styles.movieActions}>
+                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5}} onPress={changeScreen}>
+                            <Text style={{fontSize:12, color:"#fff"}}>Set Fullscreen</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5}} onPress={closeProcess}>
+                            <Text style={{fontSize:12, color:"#fff"}}>Close Window</Text>
+                        </TouchableOpacity>
+                    </View> : <Text> </Text>}
+
                 </View>
             </ScrollView>
 
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -137,7 +181,7 @@ const styles = StyleSheet.create({
     },
     movieInfo:{
         marginTop: 20,
-        width: 300
+        width: 280
     },
     movieDescText:{
         marginTop:10,
@@ -163,13 +207,16 @@ const styles = StyleSheet.create({
         marginBottom:10,
         flexDirection: 'row',
         justifyContent:'space-between',
-        width:350,
+        width:300,
     },
     qualityText:{
         flexDirection:'row'
     },
     qualityButtons:{
         flexDirection:'row'
+    },
+    movieActions:{
+        justifyContent:'center'
     }
     
 
