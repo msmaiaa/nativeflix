@@ -32,6 +32,7 @@ export default function MovieDetails(props){
 
     useEffect(()=>{
         props.navigation.setOptions(headerStyle);
+        socket.emit('app_getStatus');
     },[])
 
     socket.on('setWatching',(data)=>{
@@ -92,17 +93,17 @@ export default function MovieDetails(props){
                             return (
                             <View style={styles.qualityArea} key={index}>
                                 <View style={styles.qualityText} >
-                                    <Text style={{color:"#fff", fontSize:10}}>Quality: </Text>
-                                    <Text style={{color:"#E50914", marginRight:10, fontSize:10}}>{value.quality}</Text>
-                                    <Text style={{color:"#fff", fontSize:10}}>Seeds: </Text>
-                                    <Text style={{color:"#E50914", fontSize:10}}>{value.seeds}</Text>
+                                    <Text style={{color:"#fff", fontSize:15}}>Quality: </Text>
+                                    <Text style={{color:"#E50914", marginRight:10, fontSize:15}}>{value.quality}</Text>
+                                    <Text style={{color:"#fff", fontSize:15}}>Seeds: </Text>
+                                    <Text style={{color:"#E50914", fontSize:15}}>{value.seeds}</Text>
                                 </View>
                                 <View style={styles.qualityButtons}>
-                                    <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:10}} onPress={()=>handleOptionClick({value: value, type: 'download'})}>
-                                        <Text style={{fontSize:10, color:"#fff"}}>Download</Text>
+                                    <TouchableOpacity style={{backgroundColor:'#E50914', padding:8, marginRight:10}} onPress={()=>handleOptionClick({value: value, type: 'download'})}>
+                                        <Text style={{fontSize:12, color:"#fff"}}>Download</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{backgroundColor:'#E50914', padding:5}} onPress={()=>handleOptionClick({value: value, type: 'stream'})}>
-                                        <Text style={{fontSize:10, color:"#fff"}}>Stream</Text>
+                                    <TouchableOpacity style={{backgroundColor:'#E50914', padding:8}} onPress={()=>handleOptionClick({value: value, type: 'stream'})}>
+                                        <Text style={{fontSize:12, color:"#fff"}}>Stream</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -203,13 +204,13 @@ const styles = StyleSheet.create({
         backgroundColor:'#E50914'
     },
     qualityArea:{
-        marginBottom:10,
-        flexDirection: 'row',
-        justifyContent:'space-between',
+        marginBottom:20,
+        alignItems:'center',
         width:300,
     },
     qualityText:{
-        flexDirection:'row'
+        flexDirection:'row',
+        marginBottom:10
     },
     qualityButtons:{
         flexDirection:'row'
