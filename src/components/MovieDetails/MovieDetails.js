@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {View, TouchableOpacity, StyleSheet, Text, Image, ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {useFocusEffect } from '@react-navigation/native';
 import * as consts from '../../consts/consts';
 import socket from '../../services/socket/socket';
 
@@ -10,6 +11,9 @@ export default function MovieDetails(props){
     let movieData = props.route.params.data;
     let movieGenres = [];
     let movieOptions = movieData.torrents;
+
+    //fix memory leak
+    const isMounted = useRef(true)    
 
     const headerStyle = {
         title: '',
@@ -30,23 +34,31 @@ export default function MovieDetails(props){
         }
     });
 
+
     useEffect(()=>{
         props.navigation.setOptions(headerStyle);
         socket.emit('app_getStatus');
-    },[])
+
+        return () => { isMounted.current = false };
+    }, [])
 
     socket.on('setWatching',(data)=>{
-        if(data){
-            setWatching(true)
-        }else{
-            setProcessType(null);
-            setWatching(false);
+        if(isMounted.current){
+            if(data){
+                setWatching(true)
+            }else{
+                setProcessType(null);
+                setWatching(false);
+            }
         }
     })
 
     socket.on('processType', (data)=>{
-        setProcessType(data);
+        if(isMounted.current){
+            setProcessType(data);
+        }
     })
+
 
     const changeScreen = () =>{
         socket.emit('app_changeScreen');
