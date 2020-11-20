@@ -59,6 +59,9 @@ export default function MovieDetails(props){
         }
     })
 
+    const pauseScreen = () =>{
+        socket.emit('app_pauseScreen');
+    }
 
     const changeScreen = () =>{
         socket.emit('app_changeScreen');
@@ -125,11 +128,14 @@ export default function MovieDetails(props){
                     </View>
                     {isWatching && processType ?
                     <View style={styles.movieActions}>
-                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5}} onPress={changeScreen}>
-                            <Text style={{fontSize:12, color:"#fff"}}>Set Fullscreen</Text>
+                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:5}} onPress={changeScreen}>
+                            <Text style={{fontSize:12, color:"#fff", }}>Set Fullscreen</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5}} onPress={closeProcess}>
+                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:5}} onPress={closeProcess}>
                             <Text style={{fontSize:12, color:"#fff"}}>Close Window</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5,}} onPress={pauseScreen}>
+                            <Text style={{fontSize:12, color:"#fff"}}>Pause/Play</Text>
                         </TouchableOpacity>
                     </View> : <Text> </Text>}
 
@@ -228,7 +234,8 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     movieActions:{
-        justifyContent:'center'
+        justifyContent:'center',
+        flexDirection:'row'
     }
     
 
