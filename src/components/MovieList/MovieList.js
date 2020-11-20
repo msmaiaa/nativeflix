@@ -57,7 +57,6 @@ export default function MovieList({navigation, route}){
     useEffect(()=>{
         if(activePage != 0){
             startFetchMovies();
-            console.log(activePage);
         }
     },[activePage])
 

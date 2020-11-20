@@ -44,7 +44,6 @@ export default function MovieDetails(props){
     })
 
     socket.on('processType', (data)=>{
-        console.log(data);
         setProcessType(data);
     })
 
@@ -57,7 +56,7 @@ export default function MovieDetails(props){
     }
 
     const handleOptionClick = (data)=>{
-        let newData = {...data, title:movieData.title};
+        let newData = {...data, title:movieData.title, imdb_code: movieData.imdb_code};
         if(newData.type == 'stream'){
             socket.emit('app_startStream', newData);
         }else{
