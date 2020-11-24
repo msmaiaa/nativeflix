@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Stylesheet, Text} from 'react-native';
+import {View, Text} from 'react-native';
 import * as consts from '../../consts/consts';
 
 

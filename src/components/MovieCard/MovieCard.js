@@ -10,7 +10,7 @@ export const MovieCard = (props)=>{
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity activeOpacity={0.5} style={styles.btn} onPress={handlePress}>
+            <TouchableOpacity activeOpacity={0.5} style={{backgroundColor:'#E50914'}} onPress={handlePress}>
               <Image style={styles.image} source={{uri: urlImage}}/>
             </TouchableOpacity>
             <Text style={styles.text}>{title}</Text>
@@ -34,7 +34,4 @@ const styles = StyleSheet.create({
     textAlign:'center',
     fontSize: 12
   },
-  btn:{
-    backgroundColor:'#E50914'
-  }
 });

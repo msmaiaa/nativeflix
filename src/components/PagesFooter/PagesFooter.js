@@ -2,12 +2,10 @@ import React, {useEffect, useState} from 'react';
 import { View, StyleSheet, } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import FooterButton from './PagesFooterButton/FooterButton';
-import { useNavigation } from '@react-navigation/native';
 
 export const PagesFooter = (data)=>{
-    let navigation = useNavigation();
     const [activePage, setActivePage] = useState(null);
-    console.log(data);
+
     useEffect(()=>{
         setActivePage(data.data.activePage)
     },[])
@@ -19,9 +17,8 @@ export const PagesFooter = (data)=>{
 
     const navigatePage = (page)=>{
         data.data.handleNavigation(data.data.genre, page)
-        //console.log(data);
-        //console.log(page)
     }
+
     return (
         <View style={styles.container}>
             <FlatList

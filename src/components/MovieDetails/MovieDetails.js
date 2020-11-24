@@ -1,7 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {View, TouchableOpacity, StyleSheet, Text, Image, ScrollView} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import {useFocusEffect } from '@react-navigation/native';
 import * as consts from '../../consts/consts';
 import socket from '../../services/socket/socket';
 
@@ -113,7 +111,7 @@ export default function MovieDetails(props){
                                     <Text style={{color:"#fff", fontSize:15}}>Seeds: </Text>
                                     <Text style={{color:"#E50914", fontSize:15}}>{value.seeds}</Text>
                                 </View>
-                                <View style={styles.qualityButtons}>
+                                <View style={{flexDirection:'row'}}>
                                     <TouchableOpacity style={{backgroundColor:'#E50914', padding:8, marginRight:10}} onPress={()=>handleOptionClick({value: value, type: 'download'})}>
                                         <Text style={{fontSize:12, color:"#fff"}}>Download</Text>
                                     </TouchableOpacity>
@@ -176,10 +174,6 @@ const styles = StyleSheet.create({
         fontSize:18,
         fontWeight:'bold'
     },
-    icon:{
-        color: '#000',
-
-    },
     mainContent:{
         flex: 1,
         height: '90%',
@@ -211,15 +205,9 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     movieOptions:{
-        marginTop:20
-    },
-    movieOptions:{
         marginTop:20,
         marginBottom:10,
         alignItems:'center'
-    },
-    checkbox:{
-        backgroundColor:'#E50914'
     },
     qualityArea:{
         marginBottom:20,
@@ -230,13 +218,9 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         marginBottom:10
     },
-    qualityButtons:{
-        flexDirection:'row'
-    },
     movieActions:{
         justifyContent:'center',
         flexDirection:'row'
     }
-    
 
 })

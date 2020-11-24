@@ -16,12 +16,3 @@ export async function getMovies(genre, sort_by = null, activePage){
     return utils.filterMovies(data, activePage);
 }
 
-// export async function getMostDownMovies(){
-//     const params = '?sort_by=download_count'
-//     const data = await (await getReq(`${url}${params}`)).data.data;
-//     return filterMovies(data);
-// }
-
-
-
-
