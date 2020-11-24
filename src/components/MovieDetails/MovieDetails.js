@@ -25,7 +25,7 @@ export default function MovieDetails(props){
     }
 
     movieData.genres.forEach((g, index) => {
-        if(!index == movieData.genres.length){
+        if(index == movieData.genres.length - 1){
             movieGenres.push(g);
         }else{
             movieGenres.push(g + ' / ');
@@ -36,7 +36,6 @@ export default function MovieDetails(props){
     useEffect(()=>{
         props.navigation.setOptions(headerStyle);
         socket.emit('app_getStatus');
-
         return () => { isMounted.current = false };
     }, [])
 
@@ -85,8 +84,8 @@ export default function MovieDetails(props){
                 <View style={styles.mainContent}>
                     <Text style={styles.title}>{movieData.title}</Text>
                     <Image source={{uri: movieData.largeImage}} style={styles.image}></Image>
-                    <View style={{width: 200}}>
-                        <Text numberOfLines={1} style={{color:"#E50914", fontSize:10}}>{movieGenres.join("")}</Text>
+                    <View style={{width: 200, alignItems:'center'}}>
+                        <Text numberOfLines={1} style={{color:"#E50914", fontSize:10, textAlign:'center'}}>{movieGenres.join("")}</Text>
                     </View>
 
                     <View style={styles.movieInfo}>
@@ -100,6 +99,19 @@ export default function MovieDetails(props){
                         <Text style={{color:'#fff', marginRight:5}}>IMDB Rating:</Text>
                         <Text style={{color:'#E50914'}}>{movieData.rating}</Text>
                     </View>
+                    {isWatching && processType ?
+                    <View style={styles.movieActions}>
+                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:5}} onPress={changeScreen}>
+                            <Text style={{fontSize:12, color:"#fff", }}>Set screen size</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:5}} onPress={closeProcess}>
+                            <Text style={{fontSize:12, color:"#fff"}}>Close Window</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5,}} onPress={pauseScreen}>
+                            <Text style={{fontSize:12, color:"#fff"}}>Pause/Play</Text>
+                        </TouchableOpacity>
+                    </View> : 
+                
                     <View style={styles.movieOptions}>
                         <Text style={{color: '#fff', fontSize:15, marginBottom: 20}}>Movie Options</Text>
                         {movieOptions.map((value,index)=>{
@@ -120,23 +132,9 @@ export default function MovieDetails(props){
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                            
                             );
                         })}
-                    </View>
-                    {isWatching && processType ?
-                    <View style={styles.movieActions}>
-                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:5}} onPress={changeScreen}>
-                            <Text style={{fontSize:12, color:"#fff", }}>Set Fullscreen</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:5}} onPress={closeProcess}>
-                            <Text style={{fontSize:12, color:"#fff"}}>Close Window</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5,}} onPress={pauseScreen}>
-                            <Text style={{fontSize:12, color:"#fff"}}>Pause/Play</Text>
-                        </TouchableOpacity>
-                    </View> : <Text> </Text>}
-
+                    </View>}
                 </View>
             </ScrollView>
 
@@ -220,7 +218,9 @@ const styles = StyleSheet.create({
     },
     movieActions:{
         justifyContent:'center',
-        flexDirection:'row'
+        flexDirection:'row',
+        marginTop:20,
+        marginBottom:30
     }
 
 })
