@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {View, StyleSheet} from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import {View, StyleSheet, FlatList} from 'react-native';
 import { MovieCard } from '../MovieCard/MovieCard';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import * as utils from '../../utils/utils';
