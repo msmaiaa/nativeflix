@@ -4,6 +4,9 @@ This is an app that gathers movie data from the [YIFI api](https://yts.mx/api), 
 
 ## Preview
 
+![first](./assets/git/first.gif)
+![second](./assets/git/second.gif)
+![third](./assets/git/third.gif)
 
 ## Installation
 
