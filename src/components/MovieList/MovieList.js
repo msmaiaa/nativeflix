@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import {View, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList, ActivityIndicator} from 'react-native';
 import { MovieCard } from '../MovieCard/MovieCard';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import * as utils from '../../utils/utils';
 import * as consts from '../../consts/consts';
 import * as Axios from '../../services/api/api';
@@ -21,7 +20,7 @@ export default function MovieList({navigation, route}){
         },
         headerTintColor:consts.netflixColor,
         headerTitleStyle:{
-            fontSize:18,
+            fontSize:20,
         },
     }
 
@@ -62,7 +61,7 @@ export default function MovieList({navigation, route}){
     if(loading || !totalPages){
         return(
             <View style={styles.container}>
-                <LoadingScreen></LoadingScreen>
+                <ActivityIndicator size="large" color="#E50914"></ActivityIndicator>
             </View>
         )
     }else{
