@@ -6,6 +6,8 @@ import socket from '../../services/socket/socket';
 export default function MovieDetails(props){
     const [isWatching, setWatching] = useState(null);
     const [processType, setProcessType] = useState(null);
+    const [isActiveMovie, setActiveMovie] = useState(null);
+
     let movieData = props.route.params.data;
     let movieGenres = [];
     let movieOptions = movieData.torrents;
@@ -41,11 +43,13 @@ export default function MovieDetails(props){
 
     socket.on('setWatching',(data)=>{
         if(isMounted.current){
-            if(data){
+            if(data.condition){
                 setWatching(true)
+                setActiveMovie(data.activeCode);
             }else{
                 setProcessType(null);
                 setWatching(false);
+                setActiveMovie(false);
             }
         }
     })
@@ -99,7 +103,7 @@ export default function MovieDetails(props){
                         <Text style={{color:'#fff', marginRight:5}}>IMDB Rating:</Text>
                         <Text style={{color:'#E50914'}}>{movieData.rating}</Text>
                     </View>
-                    {isWatching && processType ?
+                    {isWatching && processType && isActiveMovie == movieData.imdb_code ?
                     <View style={styles.movieActions}>
                         <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:5}} onPress={changeScreen}>
                             <Text style={{fontSize:12, color:"#fff", }}>Set screen size</Text>
