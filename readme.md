@@ -39,4 +39,4 @@ I'm not Pull requests are welcome. For major changes, please open an issue first
 Please make sure to update tests as appropriate.
 
 ## License
-#todo
+[here](https://github.com/msmaiaa/nativeflix/blob/main/LICENSE)
