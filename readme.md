@@ -19,7 +19,7 @@ npm install
 
 ## Usage
 
-Open config.json, put the local ip of the machine that is running the server and the port of preference. Just like the example below.  
+Open config.json, put the local ip of the machine that is running the server and the port of preference (use the same on the server). Just like the example below.  
 If you don't know how to find the local ip, click here: [help](https://lifehacker.com/how-to-find-your-local-and-external-ip-address-5833108#:~:text=Open%20up%20the%20Command%20Prompt,is%20your%20local%20IP%20address.)
 ```json
 {
@@ -45,3 +45,4 @@ Please make sure to update tests as appropriate.
 - [ ] Search movies by name
 - [ ] Order by imdb rating or download count
 - [ ] 'I'm feeling lucky' button
+- [ ] Search for the server on the local network ips
