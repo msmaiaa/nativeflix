@@ -1,6 +1,6 @@
 # nativeflix
 
-This is an app that gathers movie data from the [YIFI api](https://yts.mx/api), generating a list of movies based on the selected genre. It connects to your pc through sockets using the [nativeflix-server](https://github.com/msmaiaa/nativeflix-server), creating the possibility to download the torrent provided by the api or stream it to VLC. I used expo because i wanted to test it on ios and android without having a mac. More info [here](https://github.com/msmaiaa/nativeflix-server).
+This is an app that gathers movie data from the [YIFY api](https://yts.mx/api), generating a list of movies based on the selected genre. It connects to your pc through sockets using the [nativeflix-server](https://github.com/msmaiaa/nativeflix-server), creating the possibility to download the torrent provided by the api or stream it to VLC. I used expo because i wanted to test it on ios and android without having a mac. More info [here](https://github.com/msmaiaa/nativeflix-server).
 
 ## Preview
 
