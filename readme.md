@@ -40,3 +40,8 @@ Please make sure to update tests as appropriate.
 
 ## License
 [here](https://github.com/msmaiaa/nativeflix/blob/main/LICENSE)
+
+## TODO
+- [ ] Search movies by name
+- [ ] Order by imdb rating or download count
+- [ ] 'I'm feeling lucky' button
