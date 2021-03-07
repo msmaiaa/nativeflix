@@ -40,6 +40,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 [here](https://github.com/msmaiaa/nativeflix/blob/main/LICENSE)
 
 ## TODO
+- [ ] Change the player to electron instead of VLC
+- [ ] Clean the code
 - [ ] Search movies by name
 - [ ] Order by imdb rating or download count
 - [ ] 'I'm feeling lucky' button
