@@ -5,7 +5,6 @@ import socket from '../../services/socket/socket';
 
 export default function MovieDetails(props){
     const [isWatching, setWatching] = useState(null);
-    const [processType, setProcessType] = useState(null);
     const [isActiveMovie, setActiveMovie] = useState(null);
 
     let movieData = props.route.params.data;
@@ -47,16 +46,9 @@ export default function MovieDetails(props){
                 setWatching(true)
                 setActiveMovie(data.activeCode);
             }else{
-                setProcessType(null);
                 setWatching(false);
                 setActiveMovie(false);
             }
-        }
-    })
-
-    socket.on('processType', (data)=>{
-        if(isMounted.current){
-            setProcessType(data);
         }
     })
 
@@ -69,7 +61,7 @@ export default function MovieDetails(props){
     }
 
     const closeProcess = () =>{
-        socket.emit('app_closeProcess', processType);
+        socket.emit('app_closeProcess');
     }
 
     const handleOptionClick = (data)=>{
@@ -103,13 +95,10 @@ export default function MovieDetails(props){
                         <Text style={{color:'#fff', marginRight:5}}>IMDB Rating:</Text>
                         <Text style={{color:'#E50914'}}>{movieData.rating}</Text>
                     </View>
-                    {isWatching && processType && isActiveMovie == movieData.imdb_code ?
+                    {isWatching && isActiveMovie == movieData.imdb_code ?
                     <View style={styles.movieActions}>
-                        <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:5}} onPress={changeScreen}>
-                            <Text style={{fontSize:12, color:"#fff", }}>Set screen size</Text>
-                        </TouchableOpacity>
                         <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:5}} onPress={closeProcess}>
-                            <Text style={{fontSize:12, color:"#fff"}}>Close Window</Text>
+                            <Text style={{fontSize:12, color:"#fff"}}>Close</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{backgroundColor:'#E50914', padding:5,}} onPress={pauseScreen}>
                             <Text style={{fontSize:12, color:"#fff"}}>Pause/Play</Text>
@@ -128,11 +117,11 @@ export default function MovieDetails(props){
                                     <Text style={{color:"#E50914", fontSize:15}}>{value.seeds}</Text>
                                 </View>
                                 <View style={{flexDirection:'row'}}>
-                                    <TouchableOpacity style={{backgroundColor:'#E50914', padding:8, marginRight:10}} onPress={()=>handleOptionClick({value: value, type: 'download'})}>
+                                    {/* <TouchableOpacity style={{backgroundColor:'#E50914', padding:8, marginRight:10}} onPress={()=>handleOptionClick({value: value, type: 'download'})}>
                                         <Text style={{fontSize:12, color:"#fff"}}>Download</Text>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
                                     <TouchableOpacity style={{backgroundColor:'#E50914', padding:8}} onPress={()=>handleOptionClick({value: value, type: 'stream'})}>
-                                        <Text style={{fontSize:12, color:"#fff"}}>Stream</Text>
+                                        <Text style={{fontSize:12, color:"#fff"}}>Watch</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
