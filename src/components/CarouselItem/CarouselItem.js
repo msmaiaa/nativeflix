@@ -26,7 +26,6 @@ export default function CarouselItem({item, index}){
 
 const styles = StyleSheet.create({
     container:{
-
     },
     text:{
         color: consts.netflixColor,
@@ -37,14 +36,14 @@ const styles = StyleSheet.create({
     },
     image:{
         width:'100%',
-        height:200,
+        height:180,
         borderRadius: 5
     },
     background: {
         position: 'absolute',
         left: 0,
         right: 0,
-        top: 170,
+        top: 150,
         height: 30,
     },
 })
