@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import {View, StyleSheet, FlatList, ActivityIndicator} from 'react-native';
-import { MovieCard } from '../MovieCard/MovieCard';
+import { MediaCard } from '../MediaCard/MediaCard';
 import * as utils from '../../utils/utils';
 import * as consts from '../../consts/consts';
 import * as Axios from '../../services/api/api';
 import FooterButton from '../PagesFooter/PagesFooterButton/FooterButton';
 
-export default function MovieList({navigation, route}){
-    const [movies, setMovies] = useState([]);
+export default function MediaList({navigation, route}){
+    const [medias, setMedias] = useState([]);
     const [totalPages, setTotalPages] = useState();
     const [loading, setLoading] = useState(true);
     const [activePage, setActivePage] = useState(0);
@@ -24,23 +24,25 @@ export default function MovieList({navigation, route}){
         },
     }
 
-    const startFetchMovies = () =>{
+    const startFetchMedia = () =>{
         setLoading(true);
-        let moviesFetch = Axios.getMovies(route.params.genre, undefined, activePage)
-        .then((moviesData)=>{
-            let moviesArray = [];
-            for(let i = 1; i <= moviesData.totalPages; i++){
-                moviesArray.push(i);
+        let mediaFetch = Axios.getMovies(route.params.genre, undefined, activePage)
+        .then((mediaData)=>{
+            let mediaArray = [];
+            for(let i = 1; i <= mediaData.totalPages; i++){
+                mediaArray.push(i);
             }
-            setTotalPages(moviesArray);
-            setMovies(moviesData.movies);
+            setTotalPages(mediaArray);
+
+            //need to change
+            setMedias(mediaData.movies);
             setLoading(false);
         })
 
     }
 
     const handleNavigationPress = (movie) =>{
-        navigation.navigate('MovieDetails', {data:movie});
+        navigation.navigate('MediaDetails', {data:movie});
     }
 
     const changePage = (pageNumber) =>{
@@ -54,7 +56,7 @@ export default function MovieList({navigation, route}){
 
     useEffect(()=>{
         if(activePage != 0){
-            startFetchMovies();
+            startFetchMedia();
         }
     },[activePage])
 
@@ -67,7 +69,7 @@ export default function MovieList({navigation, route}){
     }else{
         return(
             <View style={styles.container}>
-                <FlatList style={{marginTop:25}} data={movies} numColumns={2} renderItem={({item}) => <MovieCard data={item} onPress={handleNavigationPress}></MovieCard>} keyExtractor={(item,index)=>item.imdb_code}/>
+                <FlatList style={{marginTop:25}} data={medias} numColumns={2} renderItem={({item}) => <MediaCard data={item} onPress={handleNavigationPress}></MediaCard>} keyExtractor={(item,index)=>item.imdb_code}/>
                 <FlatList style={{marginTop:10}} data={totalPages} horizontal={true} keyExtractor={index=>index.toString()} renderItem={({item})=> <FooterButton data={item} activePage={activePage} onPress={changePage}></FooterButton>}/>
             </View>
         )

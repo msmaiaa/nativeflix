@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-export const MovieCard = (props)=>{
+export const MediaCard = (props)=>{
     let urlImage = props.data.image;
     let title = props.data.title;
     function handlePress(){

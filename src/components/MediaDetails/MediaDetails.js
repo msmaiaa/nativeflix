@@ -3,7 +3,7 @@ import {View, TouchableOpacity, StyleSheet, Text, Image, ScrollView} from 'react
 import * as consts from '../../consts/consts';
 import socket from '../../services/socket/socket';
 
-export default function MovieDetails(props){
+export default function MediaDetails(props){
     const [isWatching, setWatching] = useState(null);
     const [isActiveMovie, setActiveMovie] = useState(null);
 

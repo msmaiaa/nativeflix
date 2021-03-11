@@ -36,12 +36,13 @@ expo start
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-## License
-[here](https://github.com/msmaiaa/nativeflix/blob/main/LICENSE)
-
 ## TODO
 - [ ] Add anime and series support
 - [ ] Search content by name
 - [ ] Order by imdb rating, download count or trending
 - [ ] 'I'm feeling lucky' button
 - [ ] Search for the server on the local network ips
+
+## License
+[here](https://github.com/msmaiaa/nativeflix/blob/main/LICENSE)
+
