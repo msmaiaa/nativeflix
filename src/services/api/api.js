@@ -1,52 +1,80 @@
-import axios from 'axios';
+const axios = require('axios');
 
-const moviesApi = 'https://yts.mx/api/v2/list_movies.json?';
-const popApi = 'https://tv-v2.api-fetch.sh/'
+//
+const ytsApi = 'https://yts.mx/api/v2/list_movies.json?';
+const animeApi = 'https://tv-v2.api-fetch.sh/'
+const popApi = 'http://popcorn-ru.tk/'
+const mediaApi = 'https://popcorn-api-enhanced.herokuapp.com/'
 
 async function getReq(url){
     let rawdata = await axios.get(url);
-    return rawdata.data.data;
+    return rawdata.data;
 }
 
-export async function getMovies(genre, sort_by = null, activePage){
-    let params = {genre: genre, sort_by: sort_by, page: activePage};
-    if(!sort_by){
-        params.sort_by = 'download_count';
+export async function getMedia({genre, activePage, query=null, mediaType}){
+    //mediaApi returns the content sorted by trending
+    //still need to add query search option to the api  
+    let params = {genre: genre,  page: activePage, mediaType:mediaType + 's'};
+    if(query){
+        params.query = query
     }
+
     let reqUrl = mountUrlParams(params);
     let data = await getReq(reqUrl);
-    return filterMovies(data, activePage);
+    return filterMedia(data, activePage, mediaType);
 }
 
-const filterMovies = (data, page)=>{
-    let totalPages = Math.ceil(data.movie_count / data.limit);
-    let newData = {totalPages: totalPages, activePage:page, movies: []}
-    for(let m of data.movies){
-        newData.movies.push(
-            {image: m.medium_cover_image,
-            largeImage: m.large_cover_image,
-            description: m.description_full,
+export async function getMediaInfo(mediaInfo){
+    let baseUrl = '';
+    if(mediaType == 'anime'){
+        baseUrl = animeApi;
+    }else{
+        baseUrl = popApi
+    }
+    let newUrl = `${baseUrl}${mediaInfo.type}/${mediaInfo.id}`
+    let info = await getReq(newUrl)
+    return info
+}
+
+const filterMedia = (data, page, type)=>{
+    let newData = {activePage:page, medias: [], totalPages: []}
+    for(let i = 0; i <= data.totalPages; i++){
+        newData.totalPages[i] = i + 1
+    }
+    for(let m of data.data){
+        let content = {
+            image: m.images.poster,
+            largeImage: m.images.poster,
+            description: m.synopsis,
             genres: m.genres,
-            imdb_code: m.imdb_code,
+            id: m._id,
             rating: m.rating,
             title: m.title,
-            torrents: m.torrents,
-            year: m.year}
-        )
+            year: m.year,
+            type:type,
+            }
+        if(type == 'Movie'){
+            content.torrents = filterTorrents(m.torrents)
+        }
+        newData.medias.push(content)
     }
     return newData;
 }
 
+const filterTorrents = (torrents) =>{
+    let newTorrents = []
+    for(const [key, value] of Object.entries(torrents.en)){
+        newTorrents.push({
+            quality: key,
+            seeds: value.seeds,
+            size: value.filesize,
+            size_bytes: value.size
+        })
+    }
+    return newTorrents
+}
+
 const mountUrlParams = (params)=>{
-    let newUrl = moviesApi;
-    if(params.genre){
-        newUrl = newUrl.concat(`&genre=${params.genre}`)
-    }
-    if(params.sort_by){
-        newUrl = newUrl.concat(`&sort_by=${params.sort_by}`)
-    }
-    if(params.page){
-        newUrl = newUrl.concat(`&page=${params.page}`)
-    }
+    let newUrl = `${mediaApi}${params.mediaType}?genre=${params.genre}&page=${params.page}`;
     return newUrl;
 }

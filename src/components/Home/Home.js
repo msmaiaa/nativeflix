@@ -10,7 +10,7 @@ export default function Home({navigation, route}){
     const [carouselItems] = useState([
         {'name': 'Movies'},
         {'name': 'Shows'},
-        {'name': 'Animes'},
+        // {'name': 'Animes'},
     ])
     const [mediaTypeIndex, setMediaTypeIndex] = useState(0);
     const [activeMediaType, setActiveMediaType] = useState({name: 'Movie', genres: consts.movieGenres});
@@ -27,7 +27,7 @@ export default function Home({navigation, route}){
     },[mediaTypeIndex])
 
     handlePress = (genre) =>{
-        navigation.navigate('MediaList', {genre: genre});
+        navigation.navigate('MediaList', {type: activeMediaType.name, genre: genre});
     }
     return(
         <View style={styles.container}>
@@ -52,7 +52,7 @@ export default function Home({navigation, route}){
             <View style={styles.genres}>
                 {activeMediaType.genres.map((value, index)=>{
                     return(
-                        <GenreButton key={index} item={value} onPress={handlePress} onPress={handlePress} item={value}></GenreButton>
+                        <GenreButton key={index} onPress={handlePress} onPress={handlePress} item={value}></GenreButton>
                     )
                 })}
                 {/* <FlatList data={activeMediaType.genres} keyExtractor={index=>index} renderItem={({item})=><GenreButton onPress={handlePress} item={item}></GenreButton>}/> */}

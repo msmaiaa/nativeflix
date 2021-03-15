@@ -8,11 +8,12 @@ import FooterButton from '../PagesFooter/PagesFooterButton/FooterButton';
 
 export default function MediaList({navigation, route}){
     const [medias, setMedias] = useState([]);
-    const [totalPages, setTotalPages] = useState();
+    const [totalPages, setTotalPages] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [activePage, setActivePage] = useState(0);
+    const [activePage, setActivePage] = useState(null);
+    const mediaType = route.params.type;
 
-    const headerTitle = `${utils.capitalizeFirstLetter(route.params.genre)} movies`
+    const headerTitle = `${utils.capitalizeFirstLetter(route.params.genre)} ${mediaType.toLowerCase()}s`
     const headerStyle = {
         title: headerTitle,
         headerStyle:{
@@ -25,24 +26,19 @@ export default function MediaList({navigation, route}){
     }
 
     const startFetchMedia = () =>{
+        
         setLoading(true);
-        let mediaFetch = Axios.getMovies(route.params.genre, undefined, activePage)
+        let mediaFetch = Axios.getMedia({genre:route.params.genre, activePage:activePage, mediaType:mediaType})
         .then((mediaData)=>{
-            let mediaArray = [];
-            for(let i = 1; i <= mediaData.totalPages; i++){
-                mediaArray.push(i);
-            }
-            setTotalPages(mediaArray);
-
-            //need to change
-            setMedias(mediaData.movies);
+            setTotalPages(mediaData.totalPages);
+            setMedias(mediaData.medias);
             setLoading(false);
         })
 
     }
 
-    const handleNavigationPress = (movie) =>{
-        navigation.navigate('MediaDetails', {data:movie});
+    const handleNavigationPress = (media) =>{
+        navigation.navigate('MediaDetails', {data:media});
     }
 
     const changePage = (pageNumber) =>{
@@ -51,16 +47,16 @@ export default function MediaList({navigation, route}){
 
     useEffect(()=>{
         navigation.setOptions(headerStyle);
-        setActivePage(1);
+        setActivePage(1)
     },[])
 
     useEffect(()=>{
-        if(activePage != 0){
+        if(activePage != null){
             startFetchMedia();
         }
     },[activePage])
 
-    if(loading || !totalPages){
+    if(loading || !totalPages || !medias){
         return(
             <View style={styles.container}>
                 <ActivityIndicator size="large" color="#E50914"></ActivityIndicator>
@@ -69,7 +65,7 @@ export default function MediaList({navigation, route}){
     }else{
         return(
             <View style={styles.container}>
-                <FlatList style={{marginTop:25}} data={medias} numColumns={2} renderItem={({item}) => <MediaCard data={item} onPress={handleNavigationPress}></MediaCard>} keyExtractor={(item,index)=>item.imdb_code}/>
+                <FlatList style={{marginTop:25}} data={medias} numColumns={2} renderItem={({item}) => <MediaCard data={item} onPress={handleNavigationPress}></MediaCard>} keyExtractor={(item,index)=>item.id}/>
                 <FlatList style={{marginTop:10}} data={totalPages} horizontal={true} keyExtractor={index=>index.toString()} renderItem={({item})=> <FooterButton data={item} activePage={activePage} onPress={changePage}></FooterButton>}/>
             </View>
         )

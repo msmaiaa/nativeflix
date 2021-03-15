@@ -1,6 +1,6 @@
 # nativeflix
 
-This is an app that gathers movie data from the [YIFY api](https://yts.mx/api) and [PopcornTime api](https://popcorntime.api-docs.io/api/), generating a list of movies, animes and shows for the selected genre. It connects to your pc through sockets using the [nativeflix-server](https://github.com/msmaiaa/nativeflix-server), creating the possibility to download the torrent provided by the api or stream it to a video player. I used expo because i wanted to test it on ios and android without having a mac. More info [here](https://github.com/msmaiaa/nativeflix-server).
+This is an app that gathers movies and shows data from the [PopcornTime api](https://github.com/msmaiaa/popcorn-api-enhanced), generating a list of movies and shows for the selected genre. It connects to your pc through sockets using the [nativeflix-server](https://github.com/msmaiaa/nativeflix-server), creating the possibility to download the torrent provided by the api or stream it to a video player. I used expo because i wanted to test it on ios and android without having a mac. More info [here](https://github.com/msmaiaa/nativeflix-server).
 
 ## Preview
 
@@ -37,10 +37,7 @@ expo start
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## TODO
-- [ ] Add anime and series support
 - [ ] Search content by name
-- [ ] Order by imdb rating, download count or trending
-- [ ] 'I'm feeling lucky' button
 - [ ] Search for the server on the local network ips
 
 ## License
