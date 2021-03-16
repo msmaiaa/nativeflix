@@ -1,7 +1,6 @@
 const axios = require('axios');
 
-//
-const ytsApi = 'https://yts.mx/api/v2/list_movies.json?';
+//const ytsApi = 'https://yts.mx/api/v2/list_movies.json?';
 const animeApi = 'https://tv-v2.api-fetch.sh/'
 const popApi = 'http://popcorn-ru.tk/'
 const mediaApi = 'https://popcorn-api-enhanced.herokuapp.com/'

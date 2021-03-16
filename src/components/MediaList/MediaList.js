@@ -4,7 +4,7 @@ import { MediaCard } from '../MediaCard/MediaCard';
 import * as utils from '../../utils/utils';
 import * as consts from '../../consts/consts';
 import * as Axios from '../../services/api/api';
-import FooterButton from '../PagesFooter/PagesFooterButton/FooterButton';
+import FooterButton from '../PagesFooterButton/FooterButton';
 
 export default function MediaList({navigation, route}){
     const [medias, setMedias] = useState([]);
@@ -26,7 +26,6 @@ export default function MediaList({navigation, route}){
     }
 
     const startFetchMedia = () =>{
-        
         setLoading(true);
         let mediaFetch = Axios.getMedia({genre:route.params.genre, activePage:activePage, mediaType:mediaType})
         .then((mediaData)=>{

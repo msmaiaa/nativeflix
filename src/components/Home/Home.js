@@ -17,50 +17,42 @@ export default function Home({navigation, route}){
 
     useEffect(()=>{
         let i = mediaTypeIndex;
-        if(i == 0){
-            setActiveMediaType({name: 'Movie', genres: consts.movieGenres})
-        }else if(i == 1){
-            setActiveMediaType({name: 'Show', genres: consts.showGenres})
-        }else if(i == 2){
-            setActiveMediaType({name: 'Anime', genres: consts.animeGenres})
-        }
+        let typeGenres = consts.allGenres[i]
+        setActiveMediaType({name: typeGenres.name, genres: typeGenres.genres})
     },[mediaTypeIndex])
 
     handlePress = (genre) =>{
         navigation.navigate('MediaList', {type: activeMediaType.name, genre: genre});
     }
+
     return(
         <View style={styles.container}>
-            
             <View style={styles.header}>
                 <Text style={{color:'#61DAFB', fontSize:40, fontStyle:'italic'}}>native</Text><Text style={{color:consts.netflixColor, fontSize:40, fontStyle:'italic'}}>flix</Text>
             </View>
-            <View style={{width:'100%', display:'flex', alignItems:'center', marginBottom:5}}>
-                <Carousel 
-                layout={"default"}
-                sliderWidth={300}
-                itemWidth={200}
-                data={carouselItems}
-                renderItem={CarouselItem}
-                containerCustomStyle={{flexGrow:0}}
-                onSnapToItem={(index)=>{setMediaTypeIndex(index)}}
-                useScrollView={true}
-                />
-            </View>
             <ScrollView>
-            <Text style={{fontSize:20, color:consts.netflixColor, textAlign:'center', marginBottom:15, marginTop: 25}}>Select a {activeMediaType.name} genre</Text>
-            <View style={styles.genres}>
-                {activeMediaType.genres.map((value, index)=>{
-                    return(
-                        <GenreButton key={index} onPress={handlePress} onPress={handlePress} item={value}></GenreButton>
-                    )
-                })}
-                {/* <FlatList data={activeMediaType.genres} keyExtractor={index=>index} renderItem={({item})=><GenreButton onPress={handlePress} item={item}></GenreButton>}/> */}
-            </View>
-                
+                <View style={{width:'100%', display:'flex', alignItems:'center', marginBottom:5}}>
+                    <Carousel 
+                    layout={"default"}
+                    sliderWidth={300}
+                    itemWidth={200}
+                    data={carouselItems}
+                    renderItem={CarouselItem}
+                    containerCustomStyle={{flexGrow:0}}
+                    onSnapToItem={(index)=>{setMediaTypeIndex(index)}}
+                    useScrollView={true}
+                    />
+                </View>
+                <Text style={{fontSize:20, color:consts.netflixColor, textAlign:'center', marginBottom:15, marginTop: 25}}>Select a {activeMediaType.name} genre</Text>
+                <View style={styles.genres}>
+                    {activeMediaType.genres.map((value, index)=>{
+                        return(
+                            <GenreButton key={index} onPress={handlePress} onPress={handlePress} item={value}></GenreButton>
+                        )
+                    })}
+                </View>
             </ScrollView>
         </View>
-
     )
 }
 

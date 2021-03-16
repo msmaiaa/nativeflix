@@ -1,11 +1,10 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {View, TouchableOpacity, StyleSheet, Text, Image, ScrollView, ActivityIndicator} from 'react-native';
-import * as consts from '../../consts/consts';
 import socket from '../../services/socket/socket';
 
 export default function MediaDetails(props){
     const [isWatching, setWatching] = useState(null);
-    const [isActiveMovie, setActiveMovie] = useState(null);
+    const [activeMovie, setActiveMovie] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
     let mediaData = props.route.params.data;
@@ -15,20 +14,7 @@ export default function MediaDetails(props){
     //fix memory leak
     const isMounted = useRef(true)    
 
-    const headerStyle = {
-        title: '',
-        headerStyle:{
-            backgroundColor:'#000',
-        },
-        headerTintColor:consts.netflixColor,
-        headerTitleStyle:{
-            fontSize:18,
-        },
-    }
-
-
     useEffect(()=>{
-        props.navigation.setOptions(headerStyle);
         socket.emit('app_getStatus');
         mediaData.genres.forEach((g, index) => {
             if(index == mediaData.genres.length - 1){
@@ -61,8 +47,9 @@ export default function MediaDetails(props){
         socket.emit('app_closeProcess');
     }
 
+    //sends magnet and some identification stuff to the server
     const handleOptionClick = (data)=>{
-        let newData = {...data, title:mediaData.title, imdb_code: mediaData.imdb_code};
+        let newData = {...data, title:mediaData.title, imdb_code: mediaData.id};
         if(newData.type == 'stream'){
             socket.emit('app_startStream', newData);
         }else{
@@ -93,13 +80,10 @@ export default function MediaDetails(props){
                             <Text style={styles.movieDescText}>{mediaData.description}</Text>
                         </View>
                         <View style={styles.movieAbout}>
-                            <Text style={{color:'#fff', marginRight:5,}}>Year:</Text>
+                            <Text style={{color:'#fff', marginRight:5}}>Year:</Text>
                             <Text style={{color:'#E50914', marginRight:20}}>{mediaData.year}</Text>
-    
-                            {/* <Text style={{color:'#fff', marginRight:5}}>IMDB Rating:</Text>
-                            <Text style={{color:'#E50914'}}>{mediaData.rating}</Text> */}
                         </View>
-                        {isWatching && isActiveMovie == mediaData.imdb_code ?
+                        {isWatching && activeMovie == mediaData.id?
                         <View style={styles.movieActions}>
                             <TouchableOpacity style={{backgroundColor:'#E50914', padding:5, marginRight:5}} onPress={closeProcess}>
                                 <Text style={{fontSize:12, color:"#fff"}}>Close</Text>
@@ -121,9 +105,6 @@ export default function MediaDetails(props){
                                         <Text style={{color:"#E50914", fontSize:15}}>{value.seeds}</Text>
                                     </View>
                                     <View style={{flexDirection:'row'}}>
-                                        {/* <TouchableOpacity style={{backgroundColor:'#E50914', padding:8, marginRight:10}} onPress={()=>handleOptionClick({value: value, type: 'download'})}>
-                                            <Text style={{fontSize:12, color:"#fff"}}>Download</Text>
-                                        </TouchableOpacity> */}
                                         <TouchableOpacity style={{backgroundColor:'#E50914', padding:8}} onPress={()=>handleOptionClick({value: value, type: 'stream'})}>
                                             <Text style={{fontSize:12, color:"#fff"}}>Watch</Text>
                                         </TouchableOpacity>
