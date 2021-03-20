@@ -9,6 +9,7 @@ npm-debug.*
 *.orig.*
 web-build/
 .eslintcache
+.vscode
 
 # macOS
 .DS_Store

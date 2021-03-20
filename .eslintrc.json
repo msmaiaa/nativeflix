@@ -28,9 +28,10 @@
 		"error",
 		{
 		  "singleQuote": true,
-		  "trailingComma": "all",
 		  "arrowParens": "avoid",
-		  "endOfLine": "auto"
+		  "endOfLine": "auto",
+		  "tabWidth": 4,
+		  "useTabs": true
 		}
 	  ],
 	  "no-use-before-define": "off",
@@ -38,6 +39,8 @@
 	  "import/extensions": ["error", "never"],
 	  "react/prop-types": 0,
 	  "no-shadow": "off",
-	  "@typescript-eslint/no-shadow": ["error"]
+	  "@typescript-eslint/no-shadow": ["error"],
+	  "camelcase": "off",
+	  "@typescript-eslint/camelcase": "off"
 	}
   }
