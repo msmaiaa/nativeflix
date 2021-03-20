@@ -10,19 +10,22 @@ import socket from './src/services/socket/socket';
 const Stack = createStackNavigator();
 
 export default function App() {
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="MediaList" component={MediaList} />
-          <Stack.Screen name="MediaDetails" component={MediaDetails} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
-  );
+	return (
+		<SafeAreaView style={{ flex: 1 }}>
+			<NavigationContainer>
+				<Stack.Navigator initialRouteName="Home">
+					<Stack.Screen
+						name="Home"
+						component={Home}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen name="MediaList" component={MediaList} />
+					<Stack.Screen
+						name="MediaDetails"
+						component={MediaDetails}
+					/>
+				</Stack.Navigator>
+			</NavigationContainer>
+		</SafeAreaView>
+	);
 }
