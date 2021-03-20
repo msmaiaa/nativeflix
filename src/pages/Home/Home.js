@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import Carousel from 'react-native-snap-carousel';
 import {View, Text, StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler'
-import GenreButton from '../GenreButton/GenreButton';
-import CarouselItem from '../CarouselItem/CarouselItem';
+import GenreButton from '../../components/GenreButton/GenreButton';
+import CarouselItem from '../../components/CarouselItem/CarouselItem';
 import * as consts from '../../consts/consts';
 
 export default function Home({navigation, route}){

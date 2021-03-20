@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {View, StyleSheet, FlatList, ActivityIndicator} from 'react-native';
-import { MediaCard } from '../MediaCard/MediaCard';
+import { MediaCard } from '../../components/MediaCard/MediaCard';
 import * as utils from '../../utils/utils';
 import * as consts from '../../consts/consts';
 import * as Axios from '../../services/api/api';
-import FooterButton from '../PagesFooterButton/FooterButton';
+import FooterButton from '../../components/PagesFooterButton/FooterButton';
 
 export default function MediaList({navigation, route}){
     const [medias, setMedias] = useState([]);
