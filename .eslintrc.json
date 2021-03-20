@@ -39,7 +39,7 @@
 	  "react/prop-types": 0,
 	  "no-shadow": "off",
 	  "react-hooks/exhaustive-deps": "off",
-	  "global-require": "warn",
+	  "global-require": "off",
 	  "camelcase": "off",
 	  "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
 	  "no-restricted-syntax":"off",
@@ -48,5 +48,6 @@
 	  "@typescript-eslint/no-explicit-any":"off",
 	  "@typescript-eslint/camelcase": "off",
 	  "@typescript-eslint/no-var-requires": "off"
+	  
 	}
   }
