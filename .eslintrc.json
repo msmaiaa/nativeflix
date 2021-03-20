@@ -35,11 +35,12 @@
 		}
 	  ],
 	  "no-use-before-define": "off",
-	  "@typescript-eslint/no-use-before-define": ["error"],
+	  "@typescript-eslint/no-use-before-define": ["error", { "functions": true, "classes": true, "variables": false }],
 	  "import/extensions": ["error", "never"],
 	  "react/prop-types": 0,
 	  "no-shadow": "off",
 	  "@typescript-eslint/no-shadow": ["error"],
+	  "react-hooks/exhaustive-deps": "off",
 	  "camelcase": "off",
 	  "@typescript-eslint/camelcase": "off"
 	}
