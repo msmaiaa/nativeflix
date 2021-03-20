@@ -35,13 +35,18 @@
 		}
 	  ],
 	  "no-use-before-define": "off",
-	  "@typescript-eslint/no-use-before-define": ["error", { "functions": true, "classes": true, "variables": false }],
 	  "import/extensions": ["error", "never"],
 	  "react/prop-types": 0,
 	  "no-shadow": "off",
-	  "@typescript-eslint/no-shadow": ["error"],
 	  "react-hooks/exhaustive-deps": "off",
+	  "global-require": "warn",
 	  "camelcase": "off",
-	  "@typescript-eslint/camelcase": "off"
+	  "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
+	  "no-restricted-syntax":"off",
+	  "@typescript-eslint/no-use-before-define": ["error", { "functions": true, "classes": true, "variables": false }],
+	  "@typescript-eslint/no-shadow": ["error"],
+	  "@typescript-eslint/no-explicit-any":"off",
+	  "@typescript-eslint/camelcase": "off",
+	  "@typescript-eslint/no-var-requires": "off"
 	}
   }
