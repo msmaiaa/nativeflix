@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 import * as utils from '../../utils/utils';
+import * as consts from '../../consts/consts';
 
 export default function GenreButton(props){
 
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     btn:{
-        backgroundColor: '#000',
+        backgroundColor: consts.backgroundColor,
         width: '100%',
         justifyContent:'center',
         height:35,

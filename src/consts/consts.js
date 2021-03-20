@@ -4,6 +4,7 @@ const animeGenres = ['Action','Ecchi','Harem','Romance','School','Supernatural',
 
 module.exports = {
     netflixColor: '#E50914',
+	backgroundColor: '#252525',
     movieGenres: movieGenres,
     showGenres: showGenres,
     animeGenres: animeGenres,

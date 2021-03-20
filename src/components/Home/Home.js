@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Carousel from 'react-native-snap-carousel';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler'
 import GenreButton from '../GenreButton/GenreButton';
 import CarouselItem from '../CarouselItem/CarouselItem';
@@ -27,15 +27,15 @@ export default function Home({navigation, route}){
 
     return(
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={{color:'#61DAFB', fontSize:40, fontStyle:'italic'}}>native</Text><Text style={{color:consts.netflixColor, fontSize:40, fontStyle:'italic'}}>flix</Text>
-            </View>
             <ScrollView>
+				<View style={styles.header}>
+					<Text style={{color:'#61DAFB', fontSize:22, fontStyle:'italic'}}>native</Text><Text style={{color:consts.netflixColor, fontSize:22, fontStyle:'italic'}}>flix</Text>
+				</View>
                 <View style={{width:'100%', display:'flex', alignItems:'center', marginBottom:5}}>
                     <Carousel 
                     layout={"default"}
                     sliderWidth={300}
-                    itemWidth={200}
+                    itemWidth={250}
                     data={carouselItems}
                     renderItem={CarouselItem}
                     containerCustomStyle={{flexGrow:0}}
@@ -47,7 +47,7 @@ export default function Home({navigation, route}){
                 <View style={styles.genres}>
                     {activeMediaType.genres.map((value, index)=>{
                         return(
-                            <GenreButton key={index} onPress={handlePress} onPress={handlePress} item={value}></GenreButton>
+                            <GenreButton key={index} onPress={handlePress} item={value}></GenreButton>
                         )
                     })}
                 </View>
@@ -58,7 +58,7 @@ export default function Home({navigation, route}){
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:"#000",
+        backgroundColor:consts.backgroundColor,
         flex: 1,
         alignItems:'center',
     },
@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'center',
         alignItems:'center',
-        height: '15%',
-        marginBottom: 25
+        marginBottom: 20,
+		marginTop: 20
     },
     genres:{
         flex: 1,
