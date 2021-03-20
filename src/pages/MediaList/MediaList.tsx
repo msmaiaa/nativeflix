@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { MediaCard } from '../../components/MediaCard/MediaCard';
+import MediaCard from '../../components/MediaCard/MediaCard';
 import { Media } from '../../models/Media';
 import FooterButton from '../../components/PagesFooterButton/FooterButton';
 import * as utils from '../../utils/utils';
