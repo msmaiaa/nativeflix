@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import consts from '../../consts/consts';
 import { Media } from '../../models/Media';
 
 type Props = {
@@ -19,7 +20,7 @@ export default function MediaCard({ data, onPress }: Props) {
 		<View style={styles.container}>
 			<TouchableOpacity
 				activeOpacity={0.5}
-				style={{ backgroundColor: '#E50914' }}
+				style={{ backgroundColor: consts.grayShadowColor }}
 				onPress={handlePress}
 			>
 				<Image style={styles.image} source={{ uri: urlImage }} />

@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as utils from '../../utils/utils';
 import * as consts from '../../consts/consts';
 
@@ -14,8 +15,19 @@ export default function GenreButton({ item, onPress }: Prop) {
 
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity style={styles.btn} onPress={() => onPress(item)}>
-				<Text style={{ textAlign: 'center', color: '#fff' }}>
+			<TouchableOpacity
+				style={styles.btn}
+				onPress={() => onPress(item)}
+				containerStyle={{ overflow: 'visible' }}
+			>
+				<Text
+					style={{
+						textAlign: 'center',
+						color: '#ffffff',
+						fontFamily: 'Roboto_300Light',
+						fontSize: 18,
+					}}
+				>
 					{name}
 				</Text>
 			</TouchableOpacity>
@@ -26,16 +38,24 @@ export default function GenreButton({ item, onPress }: Prop) {
 const styles = StyleSheet.create({
 	container: {
 		justifyContent: 'center',
-		marginBottom: '1%',
-		width: '100%',
-		flexDirection: 'row',
+		marginBottom: 35,
+		width: 115,
+		height: 45,
 	},
 	btn: {
-		backgroundColor: consts.backgroundColor,
-		width: '100%',
+		backgroundColor: '#000000',
+		borderRadius: 5,
+		width: 115,
 		justifyContent: 'center',
-		height: 35,
+		height: 45,
 		paddingTop: 5,
 		paddingBottom: 5,
+		shadowColor: consts.grayShadowColor,
+		elevation: 10,
+		shadowRadius: 1,
+		shadowOffset: { width: -5, height: 5 },
+		shadowOpacity: 5,
+		borderColor: consts.grayShadowColor,
+		borderWidth: 1,
 	},
 });
