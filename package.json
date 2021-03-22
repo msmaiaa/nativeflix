@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo-google-fonts/roboto": "^0.1.0",
     "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.8.9",
@@ -15,6 +16,7 @@
     "@types/react-native-snap-carousel": "^3.8.2",
     "axios": "^0.21.0",
     "expo": "~39.0.2",
+    "expo-font": "~8.3.0",
     "expo-linear-gradient": "~8.3.0",
     "expo-status-bar": "~1.0.2",
     "react": "16.13.1",
