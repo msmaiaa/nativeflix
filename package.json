@@ -14,7 +14,7 @@
     "@react-navigation/native": "^5.8.9",
     "@react-navigation/stack": "^5.12.6",
     "@types/react-native-snap-carousel": "^3.8.2",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "expo": "~39.0.2",
     "expo-font": "~8.3.0",
     "expo-linear-gradient": "~8.3.0",

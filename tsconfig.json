@@ -18,5 +18,8 @@
   },
   	"include":[
 		"src", "decs.d.ts", "./App.tsx"
+	],
+	"exclude": [
+		"**/*.js"
 	]
 }
