@@ -103,7 +103,7 @@ module.exports = {
 	netflixColor: '#E50914',
 	redShadowColor: '#FF0000',
 	backgroundColor: '#000000',
-	grayShadowColor: '#999999',
+	grayShadowColor: '#4a4a4a',
 	greenShadowColor: '#00FF19',
 	movieGenres,
 	showGenres,
