@@ -4,7 +4,6 @@ import MediaCard from '../../components/MediaCard/MediaCard';
 import { Media } from '../../models/Media';
 import FooterButton from '../../components/PagesFooterButton/FooterButton';
 import * as utils from '../../utils/utils';
-import * as consts from '../../consts/consts';
 import * as api from '../../services/api/api';
 
 type Props = {
@@ -24,14 +23,7 @@ export default function MediaList({ navigation, route }: Props) {
 	)} ${mediaType.toLowerCase()}s`;
 
 	const headerStyle = {
-		title: headerTitle,
-		headerStyle: {
-			backgroundColor: '#000',
-		},
-		headerTintColor: consts.netflixColor,
-		headerTitleStyle: {
-			fontSize: 20,
-		},
+		headerTitle,
 	};
 
 	const startFetchMedia = () => {
@@ -67,14 +59,13 @@ export default function MediaList({ navigation, route }: Props) {
 	if (loading || !totalPages || !medias) {
 		return (
 			<View style={styles.container}>
-				<ActivityIndicator size="large" color="#E50914" />
+				<ActivityIndicator size="large" color="#ffffff" />
 			</View>
 		);
 	}
 	return (
 		<View style={styles.container}>
 			<FlatList
-				style={{ marginTop: 25 }}
 				data={medias}
 				numColumns={2}
 				renderItem={({ item }) => (
@@ -105,5 +96,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#000',
 		flex: 1,
 		justifyContent: 'center',
+		height: '100%',
 	},
 });

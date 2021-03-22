@@ -9,7 +9,10 @@ import {
 	ActivityIndicator,
 } from 'react-native';
 import { Torrent } from '../../models/Torrent';
+import LabelSM from '../../components/LabelSM/LabelSM';
 import socket from '../../services/socket/socket';
+import consts from '../../consts/consts';
+import MediaOption from '../../components/MediaOption/MediaOption';
 
 //	split later
 interface SocketWatchingResponse {
@@ -19,9 +22,10 @@ interface SocketWatchingResponse {
 
 type Props = {
 	route: any;
+	navigation: any;
 };
 
-export default function MediaDetails({ route }: Props) {
+export default function MediaDetails({ route, navigation }: Props) {
 	const [isWatching, setWatching] = useState(null);
 	const [activeMovie, setActiveMovie] = useState(null);
 	const [isLoading, setLoading] = useState(true);
@@ -34,6 +38,7 @@ export default function MediaDetails({ route }: Props) {
 	const isMounted = useRef(true);
 
 	useEffect(() => {
+		navigation.setOptions({ headerTitle: '' });
 		socket.emit('app_getStatus');
 		mediaData.genres.forEach((g: string, index: number) => {
 			if (index === mediaData.genres.length - 1) {
@@ -97,43 +102,27 @@ export default function MediaDetails({ route }: Props) {
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View style={styles.mainContent}>
 					<Text style={styles.title}>{mediaData.title}</Text>
+					<LabelSM
+						title={mediaData.year}
+						bgColor="#ffffff"
+						width={32}
+					/>
 					<Image
 						source={{ uri: mediaData.largeImage }}
 						style={styles.image}
 					/>
-					<View style={{ width: 200, alignItems: 'center' }}>
-						<Text
-							numberOfLines={1}
-							style={{
-								color: '#E50914',
-								fontSize: 10,
-								textAlign: 'center',
-							}}
-						>
-							{mediaGenres.join('')}
-						</Text>
-					</View>
-
 					<View style={styles.movieInfo}>
 						<Text
 							style={{
 								color: '#fff',
-								fontSize: 15,
-								textAlign: 'center',
+								fontFamily: 'Roboto_400Regular',
+								fontSize: 18,
 							}}
 						>
-							Description:
+							Synopsis
 						</Text>
 						<Text style={styles.movieDescText}>
 							{mediaData.description}
-						</Text>
-					</View>
-					<View style={styles.movieAbout}>
-						<Text style={{ color: '#fff', marginRight: 5 }}>
-							Year:
-						</Text>
-						<Text style={{ color: '#E50914', marginRight: 20 }}>
-							{mediaData.year}
 						</Text>
 					</View>
 					{isWatching && activeMovie === mediaData.id ? (
@@ -176,74 +165,18 @@ export default function MediaDetails({ route }: Props) {
 							{mediaOptions.map(
 								(value: Torrent, index: number) => {
 									return (
-										<View
-											style={styles.qualityArea}
-											key={value.peers}
-										>
-											<View style={styles.qualityText}>
-												<Text
-													style={{
-														color: '#fff',
-														fontSize: 15,
-													}}
-												>
-													Quality:{' '}
-												</Text>
-												<Text
-													style={{
-														color: '#E50914',
-														marginRight: 10,
-														fontSize: 15,
-													}}
-												>
-													{value.quality}
-												</Text>
-												<Text
-													style={{
-														color: '#fff',
-														fontSize: 15,
-													}}
-												>
-													Seeds:{' '}
-												</Text>
-												<Text
-													style={{
-														color: '#E50914',
-														fontSize: 15,
-													}}
-												>
-													{value.seeds}
-												</Text>
-											</View>
-											<View
-												style={{
-													flexDirection: 'row',
-												}}
-											>
-												<TouchableOpacity
-													style={{
-														backgroundColor:
-															'#E50914',
-														padding: 8,
-													}}
-													onPress={() =>
-														handleOptionClick({
-															value,
-															type: 'stream',
-														})
-													}
-												>
-													<Text
-														style={{
-															fontSize: 12,
-															color: '#fff',
-														}}
-													>
-														Watch
-													</Text>
-												</TouchableOpacity>
-											</View>
-										</View>
+										<MediaOption
+											key={value.seeds}
+											quality={value.quality}
+											seeds={value.seeds}
+											peers={value.peers}
+											press={() =>
+												handleOptionClick({
+													value,
+													type: 'stream',
+												})
+											}
+										/>
 									);
 								}
 							)}
@@ -271,19 +204,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#E50914',
 	},
-	headerBox: {
-		flexDirection: 'row',
-		width: '72%',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-	},
-	headerBtn: {
-		marginLeft: 10,
-	},
-	headerText: {
-		fontSize: 18,
-		fontWeight: 'bold',
-	},
 	mainContent: {
 		flex: 1,
 		height: '90%',
@@ -294,25 +214,23 @@ const styles = StyleSheet.create({
 	title: {
 		textAlign: 'center',
 		color: '#fff',
-		fontSize: 22,
-		marginBottom: 15,
+		fontFamily: 'Roboto_300Light_Italic',
+		fontSize: 24,
+		marginBottom: 10,
 	},
 	image: {
 		height: 350,
-		width: 200,
+		width: 250,
 	},
 	movieInfo: {
-		marginTop: 20,
-		width: 280,
+		marginTop: 25,
+		width: 250,
 	},
 	movieDescText: {
 		marginTop: 10,
-		color: '#E50914',
+		color: '#A8A8A8',
 		textAlign: 'center',
-	},
-	movieAbout: {
-		marginTop: 10,
-		flexDirection: 'row',
+		fontSize: 12,
 	},
 	mediaOptions: {
 		marginTop: 20,

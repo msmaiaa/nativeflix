@@ -38,27 +38,7 @@ export default function Home({ navigation }: Props) {
 
 	return (
 		<View style={styles.container}>
-			<ScrollView>
-				<View style={styles.header}>
-					<Text
-						style={{
-							color: '#61DAFB',
-							fontSize: 22,
-							fontStyle: 'italic',
-						}}
-					>
-						native
-					</Text>
-					<Text
-						style={{
-							color: consts.netflixColor,
-							fontSize: 22,
-							fontStyle: 'italic',
-						}}
-					>
-						flix
-					</Text>
-				</View>
+			<ScrollView contentContainerStyle={{ alignItems: 'center' }}>
 				<View
 					style={{
 						width: '100%',
@@ -80,27 +60,21 @@ export default function Home({ navigation }: Props) {
 						useScrollView
 					/>
 				</View>
-				<Text
-					style={{
-						fontSize: 20,
-						color: consts.netflixColor,
-						textAlign: 'center',
-						marginBottom: 15,
-						marginTop: 25,
-					}}
-				>
-					Select a {activeMediaType.name} genre
-				</Text>
-				<View style={styles.genres}>
-					{activeMediaType.genres.map((value, index) => {
-						return (
-							<GenreButton
-								key={value}
-								onPress={handlePress}
-								item={value}
-							/>
-						);
-					})}
+				<View style={styles.view}>
+					<Text style={styles.discoverText}>
+						Discover {activeMediaType.name}s
+					</Text>
+					<View style={styles.genres}>
+						{activeMediaType.genres.map((value, index) => {
+							return (
+								<GenreButton
+									key={value}
+									onPress={handlePress}
+									item={value}
+								/>
+							);
+						})}
+					</View>
 				</View>
 			</ScrollView>
 		</View>
@@ -112,16 +86,22 @@ const styles = StyleSheet.create({
 		backgroundColor: consts.backgroundColor,
 		flex: 1,
 		alignItems: 'center',
-	},
-	header: {
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginBottom: 20,
-		marginTop: 20,
+		paddingTop: 50,
 	},
 	genres: {
 		flex: 1,
-		alignItems: 'center',
+		flexWrap: 'wrap',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		marginTop: 52,
+	},
+	discoverText: {
+		color: '#ffffff',
+		fontSize: 36,
+		fontFamily: 'Roboto_100Thin_Italic',
+		textAlign: 'center',
+	},
+	view: {
+		width: 250,
 	},
 });
