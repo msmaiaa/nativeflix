@@ -14,7 +14,7 @@ type Props = {
 export default function Home({ navigation }: Props) {
 	const [carouselItems] = useState([
 		{ name: 'Movies' },
-		{ name: 'Shows' },
+		// { name: 'Shows' },
 		// {'name': 'Animes'},
 	]);
 	const [mediaTypeIndex, setMediaTypeIndex] = useState(0);

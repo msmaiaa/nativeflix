@@ -11,7 +11,6 @@ import {
 import { Torrent } from '../../models/Torrent';
 import LabelSM from '../../components/LabelSM/LabelSM';
 import socket from '../../services/socket/socket';
-import consts from '../../consts/consts';
 import MediaOption from '../../components/MediaOption/MediaOption';
 
 //	split later

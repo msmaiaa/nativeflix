@@ -96,6 +96,8 @@ const filterTorrents = (torrents: any) => {
 			peers: value.peers,
 			size: value.filesize,
 			size_bytes: value.size,
+			url: value.url,
+			title: value.title,
 		});
 	}
 	return newTorrents;

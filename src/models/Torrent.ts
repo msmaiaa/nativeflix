@@ -4,4 +4,6 @@ export interface Torrent {
 	peers: number;
 	size: string;
 	size_bytes: string;
+	url: string;
+	title: string;
 }
