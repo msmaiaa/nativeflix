@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 import {
@@ -16,9 +17,33 @@ import socket from './src/services/socket/socket';
 import Home from './src/pages/Home/Home';
 import MediaList from './src/pages/MediaList/MediaList';
 import MediaDetails from './src/pages/MediaDetails/MediaDetails';
+import MediaPlayer from './src/pages/MediaPlayer/MediaPlayer';
 import { NavHeaderOptions } from './src/components/NavHeader/NavHeader';
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function StackScreens() {
+	return (
+		<Stack.Navigator initialRouteName="Home">
+			<Stack.Screen
+				name="Home"
+				component={Home}
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen
+				name="MediaList"
+				component={MediaList}
+				options={NavHeaderOptions}
+			/>
+			<Stack.Screen
+				name="MediaDetails"
+				component={MediaDetails}
+				options={NavHeaderOptions}
+			/>
+		</Stack.Navigator>
+	);
+}
 
 export default function App() {
 	const [isLoaded, setLoaded] = useState(false);
@@ -58,23 +83,13 @@ export default function App() {
 				translucent
 			>
 				<NavigationContainer>
-					<Stack.Navigator initialRouteName="Home">
-						<Stack.Screen
-							name="Home"
-							component={Home}
-							options={{ headerShown: false }}
+					<Tab.Navigator>
+						<Tab.Screen name="Media" component={StackScreens} />
+						<Tab.Screen
+							name="MediaPlayer"
+							component={MediaPlayer}
 						/>
-						<Stack.Screen
-							name="MediaList"
-							component={MediaList}
-							options={NavHeaderOptions}
-						/>
-						<Stack.Screen
-							name="MediaDetails"
-							component={MediaDetails}
-							options={NavHeaderOptions}
-						/>
-					</Stack.Navigator>
+					</Tab.Navigator>
 				</NavigationContainer>
 			</AnimatedSplash>
 		</SafeAreaView>
