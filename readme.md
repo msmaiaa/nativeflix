@@ -4,9 +4,9 @@ This is an app that gathers movies and shows data from the [PopcornTime api](htt
 
 ## Preview
 
-![first](./assets/git/first.gif)
-![second](./assets/git/second.gif)
-![third](./assets/git/third.gif)
+![first](./assets/git/first.gif) ![second](./assets/git/second.gif) ![third](./assets/git/third.gif)
+ 
+
 
 ## Installation
 
@@ -19,7 +19,7 @@ npm install
 
 ## Usage
 
-Open config.json, put the local ip of the machine that is running the server and the port of preference (use the same on the server). Just like the example below.  
+Create a config.json file on the root folder of the project, put the local ip of the machine that is running the server and the port of preference (use the same on the server). Just like the example below.  
 If you don't know how to find the local ip, click here: [help](https://lifehacker.com/how-to-find-your-local-and-external-ip-address-5833108#:~:text=Open%20up%20the%20Command%20Prompt,is%20your%20local%20IP%20address.)
 ```json
 {
@@ -35,10 +35,6 @@ expo start
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## TODO
-- [ ] Search content by name
-- [ ] Search for the server on the local network ips
 
 ## License
 [here](https://github.com/msmaiaa/nativeflix/blob/main/LICENSE)
