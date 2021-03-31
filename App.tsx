@@ -13,7 +13,7 @@ import {
 	Roboto_400Regular,
 	Roboto_400Regular_Italic,
 } from '@expo-google-fonts/roboto';
-import socket from './src/services/socket/socket';
+import { SocketContext, socket } from './src/context/socket';
 import Home from './src/pages/Home/Home';
 import MediaList from './src/pages/MediaList/MediaList';
 import MediaDetails from './src/pages/MediaDetails/MediaDetails';
@@ -73,25 +73,27 @@ export default function App() {
 		);
 	}
 	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: '#000000' }}>
-			<AnimatedSplash
-				backgroundColor="#000000"
-				isLoaded={isLoaded}
-				logoImage={require('./src/pics/logo.png')}
-				logoHeight={150}
-				logoWidth={150}
-				translucent
-			>
-				<NavigationContainer>
-					<Tab.Navigator>
-						<Tab.Screen name="Media" component={StackScreens} />
-						<Tab.Screen
-							name="MediaPlayer"
-							component={MediaPlayer}
-						/>
-					</Tab.Navigator>
-				</NavigationContainer>
-			</AnimatedSplash>
-		</SafeAreaView>
+		<SocketContext.Provider value={socket}>
+			<SafeAreaView style={{ flex: 1, backgroundColor: '#000000' }}>
+				<AnimatedSplash
+					backgroundColor="#000000"
+					isLoaded={isLoaded}
+					logoImage={require('./src/pics/logo.png')}
+					logoHeight={150}
+					logoWidth={150}
+					translucent
+				>
+					<NavigationContainer>
+						<Tab.Navigator>
+							<Tab.Screen name="Media" component={StackScreens} />
+							<Tab.Screen
+								name="MediaPlayer"
+								component={MediaPlayer}
+							/>
+						</Tab.Navigator>
+					</NavigationContainer>
+				</AnimatedSplash>
+			</SafeAreaView>
+		</SocketContext.Provider>
 	);
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import {
 	View,
 	TouchableOpacity,
@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Torrent } from '../../models/Torrent';
 import LabelSM from '../../components/LabelSM/LabelSM';
-import socket from '../../services/socket/socket';
+import { SocketContext } from '../../context/socket';
 import MediaOption from '../../components/MediaOption/MediaOption';
 
 //	split later
@@ -29,6 +29,7 @@ export default function MediaDetails({ route, navigation }: Props) {
 	const [activeMovie, setActiveMovie] = useState(null);
 	const [isLoading, setLoading] = useState(true);
 
+	const socket = useContext(SocketContext);
 	const mediaData = route.params.data;
 	const mediaGenres: string[] = [];
 	const mediaOptions = mediaData.torrents;
@@ -49,11 +50,12 @@ export default function MediaDetails({ route, navigation }: Props) {
 		setLoading(false);
 		return () => {
 			isMounted.current = false;
+			socket.off('SET_WATCHING');
 		};
 	}, []);
 
 	socket.on(
-		'setWatching',
+		'SET_WATCHING',
 		({ condition, activeCode }: SocketWatchingResponse) => {
 			if (isMounted.current) {
 				if (condition) {
@@ -67,12 +69,12 @@ export default function MediaDetails({ route, navigation }: Props) {
 		}
 	);
 
-	const pauseScreen = () => {
-		socket.emit('app_pauseScreen');
+	const pausePlayer = () => {
+		socket.emit('APP_PAUSE_PLAYER');
 	};
 
 	const closeProcess = () => {
-		socket.emit('app_closeProcess');
+		socket.emit('APP_CLOSE_PROCESS');
 	};
 
 	//	sends magnet and some identification stuff to the server
@@ -83,9 +85,9 @@ export default function MediaDetails({ route, navigation }: Props) {
 			imdb_code: mediaData.id,
 		};
 		if (newData.type === 'stream') {
-			socket.emit('app_startStream', newData);
+			socket.emit('APP_START_STREAM', newData);
 		} else {
-			socket.emit('app_startDownload', newData);
+			socket.emit('APP_START_DOWNLOAD', newData);
 		}
 	};
 
@@ -143,7 +145,7 @@ export default function MediaDetails({ route, navigation }: Props) {
 									backgroundColor: '#E50914',
 									padding: 5,
 								}}
-								onPress={pauseScreen}
+								onPress={pausePlayer}
 							>
 								<Text style={{ fontSize: 12, color: '#fff' }}>
 									Pause/Play
