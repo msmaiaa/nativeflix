@@ -1,8 +1,10 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 import {
@@ -20,15 +22,16 @@ import MediaList from './src/pages/MediaList/MediaList';
 import MediaDetails from './src/pages/MediaDetails/MediaDetails';
 import MediaPlayer from './src/pages/MediaPlayer/MediaPlayer';
 import { NavHeaderOptions } from './src/components/NavHeader/NavHeader';
+import consts from './src/consts/consts';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function StackScreens() {
 	return (
-		<Stack.Navigator initialRouteName="Home">
+		<Stack.Navigator initialRouteName="MediasHome">
 			<Stack.Screen
-				name="Home"
+				name="MediasHome"
 				component={Home}
 				options={{ headerShown: false }}
 			/>
@@ -85,10 +88,42 @@ export default function App() {
 			>
 				<SocketContext.Provider value={socket}>
 					<NavigationContainer>
-						<Tab.Navigator>
-							<Tab.Screen name="Media" component={StackScreens} />
+						<Tab.Navigator
+							screenOptions={({ route }) => ({
+								tabBarIcon: ({ focused, color, size }) => {
+									let iconName;
+
+									//	leaving like this for future changes
+									if (route.name === 'Home') {
+										iconName = focused
+											? 'ios-home'
+											: 'ios-home';
+									} else if (route.name === 'Player') {
+										iconName = focused
+											? 'ios-play'
+											: 'ios-play';
+									}
+
+									return (
+										<Ionicons
+											name={iconName}
+											size={size}
+											color={color}
+										/>
+									);
+								},
+							})}
+							tabBarOptions={{
+								activeTintColor: consts.redShadowColor,
+								inactiveTintColor: 'gray',
+								style: {
+									backgroundColor: '#000',
+								},
+							}}
+						>
+							<Tab.Screen name="Home" component={StackScreens} />
 							<Tab.Screen
-								name="MediaPlayer"
+								name="Player"
 								component={MediaPlayer}
 								options={{ unmountOnBlur: true }}
 							/>
