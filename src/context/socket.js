@@ -7,3 +7,7 @@ const io = require('socket.io-client/dist/socket.io');
 
 export const socket = io.connect(url);
 export const SocketContext = React.createContext();
+
+socket.on('connect', () => {
+	socket.sendBuffer = [];
+});
