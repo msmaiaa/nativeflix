@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -73,27 +74,28 @@ export default function App() {
 		);
 	}
 	return (
-		<SocketContext.Provider value={socket}>
-			<SafeAreaView style={{ flex: 1, backgroundColor: '#000000' }}>
-				<AnimatedSplash
-					backgroundColor="#000000"
-					isLoaded={isLoaded}
-					logoImage={require('./src/pics/logo.png')}
-					logoHeight={150}
-					logoWidth={150}
-					translucent
-				>
+		<SafeAreaView style={{ flex: 1, backgroundColor: '#000000' }}>
+			<AnimatedSplash
+				backgroundColor="#000000"
+				isLoaded={isLoaded}
+				logoImage={require('./src/pics/logo.png')}
+				logoHeight={150}
+				logoWidth={150}
+				translucent
+			>
+				<SocketContext.Provider value={socket}>
 					<NavigationContainer>
 						<Tab.Navigator>
 							<Tab.Screen name="Media" component={StackScreens} />
 							<Tab.Screen
 								name="MediaPlayer"
 								component={MediaPlayer}
+								options={{ unmountOnBlur: true }}
 							/>
 						</Tab.Navigator>
 					</NavigationContainer>
-				</AnimatedSplash>
-			</SafeAreaView>
-		</SocketContext.Provider>
+				</SocketContext.Provider>
+			</AnimatedSplash>
+		</SafeAreaView>
 	);
 }
