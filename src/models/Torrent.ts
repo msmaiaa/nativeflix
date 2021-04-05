@@ -6,4 +6,5 @@ export interface Torrent {
 	size_bytes: string;
 	url: string;
 	title: string;
+	largeImage?: string;
 }
