@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
 	View,
-	TouchableOpacity,
 	StyleSheet,
 	Text,
 	Image,
@@ -13,20 +12,12 @@ import LabelSM from '../../components/LabelSM/LabelSM';
 import { SocketContext } from '../../context/socket';
 import MediaOption from '../../components/MediaOption/MediaOption';
 
-//	split later
-interface SocketWatchingResponse {
-	condition: boolean;
-	activeCode?: string;
-}
-
 type Props = {
 	route: any;
 	navigation: any;
 };
 
 export default function MediaDetails({ route, navigation }: Props) {
-	const [isWatching, setWatching] = useState(null);
-	const [activeMovie, setActiveMovie] = useState(null);
 	const [isLoading, setLoading] = useState(true);
 
 	const socket = useContext(SocketContext);
@@ -34,12 +25,8 @@ export default function MediaDetails({ route, navigation }: Props) {
 	const mediaGenres: string[] = [];
 	const mediaOptions = mediaData.torrents;
 
-	//	fix memory leak
-	const isMounted = useRef(true);
-
 	useEffect(() => {
 		navigation.setOptions({ headerTitle: '' });
-		socket.emit('app_getStatus');
 		mediaData.genres.forEach((g: string, index: number) => {
 			if (index === mediaData.genres.length - 1) {
 				mediaGenres.push(g);
@@ -48,39 +35,13 @@ export default function MediaDetails({ route, navigation }: Props) {
 			}
 		});
 		setLoading(false);
-		return () => {
-			isMounted.current = false;
-			socket.off('SET_WATCHING');
-		};
 	}, []);
-
-	socket.on(
-		'SET_WATCHING',
-		({ condition, activeCode }: SocketWatchingResponse) => {
-			if (isMounted.current) {
-				if (condition) {
-					setWatching(true);
-					setActiveMovie(activeCode);
-				} else {
-					setWatching(false);
-					setActiveMovie(false);
-				}
-			}
-		}
-	);
-
-	const pausePlayer = () => {
-		socket.emit('APP_PAUSE_PLAYER');
-	};
-
-	const closeProcess = () => {
-		socket.emit('APP_CLOSE_PROCESS');
-	};
 
 	//	sends magnet and some identification stuff to the server
 	const handleOptionClick = (data: any) => {
 		const newData = {
 			...data,
+			largeImage: mediaData.largeImage,
 			title: mediaData.title,
 			imdb_code: mediaData.id,
 		};
@@ -126,63 +87,33 @@ export default function MediaDetails({ route, navigation }: Props) {
 							{mediaData.description}
 						</Text>
 					</View>
-					{isWatching && activeMovie === mediaData.id ? (
-						<View style={styles.movieActions}>
-							<TouchableOpacity
-								style={{
-									backgroundColor: '#E50914',
-									padding: 5,
-									marginRight: 5,
-								}}
-								onPress={closeProcess}
-							>
-								<Text style={{ fontSize: 12, color: '#fff' }}>
-									Close
-								</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-								style={{
-									backgroundColor: '#E50914',
-									padding: 5,
-								}}
-								onPress={pausePlayer}
-							>
-								<Text style={{ fontSize: 12, color: '#fff' }}>
-									Pause/Play
-								</Text>
-							</TouchableOpacity>
-						</View>
-					) : (
-						<View style={styles.mediaOptions}>
-							<Text
-								style={{
-									color: '#fff',
-									fontSize: 15,
-									marginBottom: 20,
-								}}
-							>
-								Movie Options
-							</Text>
-							{mediaOptions.map(
-								(value: Torrent, index: number) => {
-									return (
-										<MediaOption
-											key={value.seeds}
-											quality={value.quality}
-											seeds={value.seeds}
-											peers={value.peers}
-											press={() =>
-												handleOptionClick({
-													value,
-													type: 'stream',
-												})
-											}
-										/>
-									);
-								}
-							)}
-						</View>
-					)}
+					<View style={styles.mediaOptions}>
+						<Text
+							style={{
+								color: '#fff',
+								fontSize: 15,
+								marginBottom: 20,
+							}}
+						>
+							Movie Options
+						</Text>
+						{mediaOptions.map((value: Torrent) => {
+							return (
+								<MediaOption
+									key={value.seeds}
+									quality={value.quality}
+									seeds={value.seeds}
+									peers={value.peers}
+									press={() =>
+										handleOptionClick({
+											value,
+											type: 'stream',
+										})
+									}
+								/>
+							);
+						})}
+					</View>
 				</View>
 			</ScrollView>
 		</View>
