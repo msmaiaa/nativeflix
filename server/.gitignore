@@ -1,0 +1,4 @@
+node_modules/
+auth.json
+.env
+.vscode

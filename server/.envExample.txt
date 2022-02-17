@@ -1,0 +1,5 @@
+LOGIN=email@mail.com
+PASS=secretPassword
+PORT=1337
+torrentsPath=G:/torrents/movies
+subtitlesLanguage=pob
